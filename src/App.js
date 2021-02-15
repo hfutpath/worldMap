@@ -146,40 +146,33 @@ function App() {
               label: {
                 show: true
               }
+            },
+            tooltip: {
+              formatter: ({ name, value }) => {
+                return `${name}: ${value[2] || 0}`;
+              }
             }
           },
           {
-            name: 'Top 5',
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            symbol: 'pin',
-            data: convertData(
-              data
-                .sort(function (a, b) {
-                  return b.value - a.value;
-                })
-                .slice(0, 6)
-            ),
-            encode: {
-              value: 2
-            },
-            symbolSize: function (val) {
-              return val[2];
-            },
-            showEffectOn: 'emphasis',
-            rippleEffect: {
-              brushType: 'stroke'
-            },
-            hoverAnimation: true,
+            type: 'map',
+            geoIndex: 0,
+            name: 'test',
             label: {
-              show: true
+              show: false,
+              position: 'top',
+              margin: 8
             },
-            itemStyle: {
-              color: '#FF7626',
-              shadowBlur: 10,
-              shadowColor: '#FF7626'
-            },
-            zlevel: 1
+            mapType: 'world',
+            data,
+            roam: false,
+            zoom: 1,
+            // 去除各个国家上的小红点
+            showLegendSymbol: false,
+            tooltip: {
+              formatter: ({ name, value }) => {
+                return `${name}: ${value || 0}`;
+              }
+            }
           }
         ],
         // visualMap: {
@@ -197,12 +190,13 @@ function App() {
           show: true,
           trigger: 'item',
           triggerOn: 'mousemove|click',
-          className: 'mapTooltip',
           formatter: '{c}',
           textStyle: {
-            fontSize: 14
+            fontSize: 14,
+            color: '#fff'
           },
-          backgroundColor: '#ff7626',
+
+          backgroundColor: '#999',
           borderWidth: 0
         }
       };
