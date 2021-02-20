@@ -117,9 +117,10 @@ function App() {
         // color: ['#ac6767', '#1d953f', '#6950a1', '#918597'],
         color: ['#FF7626'],
         geo: {
-          show: true,
+          show: false,
           map: 'world',
-          roam: true
+          roam: false,
+          selectedMode: 'multiple'
         },
         series: [
           {
@@ -155,7 +156,7 @@ function App() {
           },
           {
             type: 'map',
-            geoIndex: 0,
+            // geoIndex: 0,
             name: 'test',
             label: {
               show: false,
@@ -163,7 +164,6 @@ function App() {
               margin: 8
             },
             mapType: 'world',
-            data,
             roam: false,
             zoom: 1,
             // 去除各个国家上的小红点
@@ -172,19 +172,18 @@ function App() {
               formatter: ({ name, value }) => {
                 return `${name}: ${value || 0}`;
               }
-            }
+            },
+            selectedMode: 'multiple',
+            data: data.map(({ name, value }) => {
+              return {
+                name,
+                value,
+                // selected: true
+                itemStyle: { areaColor: '#3baaff' }
+              };
+            })
           }
         ],
-        // visualMap: {
-        //   min: 800,
-        //   max: 50000,
-        //   text: ['High', 'Low'],
-        //   realtime: false,
-        //   calculable: true,
-        //   inRange: {
-        //     color: ['lightskyblue', 'yellow', 'orangered']
-        //   }
-        // },
         // 鼠标悬浮，单击产生的效果（在网页上可以动态显示）
         tooltip: {
           show: true,
